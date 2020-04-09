@@ -234,16 +234,16 @@ def ProcessGenemark(fLines,OUT):
             if strand != '+' and strand != '-':
                 if RUNLOGOPEN:
                     RUNLOGFILE.write("%s%s\n" % ("ERROR: unknown strand designator, ",strand))
-                OUT.write("%s\n" ("ERROR encountered: unknown strand designator\n"))
+                OUT.write("%s\n" % ("ERROR encountered: unknown strand designator\n"))
                 if USER_OUT_PROVIDED:
-                    USER_OUT.write("%s\n" ("ERROR encountered: unknown strand designator\n"))
+                    USER_OUT.write("%s\n" % ("ERROR encountered: unknown strand designator\n"))
                 if CGC_WARNINGS == 'True':
                     print("ERROR in CGC_parser module: unexpected strand designator,", strand)
                 return
             if contig == '':
                 contig = 'unknown'  # Contig name may be absent in input file
-            #TMPFILE.write("%s\t%s\t%s\t%s\t%s\t%s\t%si\t%s\n" % (geneNo,strand,leftEnd,rightEnd,length,contig,protein))
-            OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%si\t%s\n" % (geneNo,strand,leftEnd,rightEnd,length,contig,protein))
+            #TMPFILE.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,leftEnd,rightEnd,length,contig,protein))
+            OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,leftEnd,rightEnd,length,contig,protein))
             if USER_OUT_PROVIDED:
                 USER_OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,leftEnd,rightEnd,length,contig,protein))
     return
@@ -291,9 +291,9 @@ def ProcessGlimmer(fLines,OUT):
             else:
                 if RUNLOGOPEN:
                     RUNLOGFILE.write("%s%s\n" % ("ERROR: unknown strand designator, ",strand))
-                OUT.write("%s\n" ("ERROR encountered: unknown strand designator\n"))
+                OUT.write("%s\n" % ("ERROR encountered: unknown strand designator\n"))
                 if USER_OUT_PROVIDED:
-                    USER_OUT.write("%s\n" ("ERROR encountered: unknown strand designator\n"))
+                    USER_OUT.write("%s\n" % ("ERROR encountered: unknown strand designator\n"))
                 if CGC_WARNINGS == 'True':
                     print("ERROR in CGC_parser module: unexpected strand designator,", strand)
                 return
@@ -302,7 +302,7 @@ def ProcessGlimmer(fLines,OUT):
             if contig == '':    # contig name may be left out of input file
                 contig = 'unknown'
             count += 1; geneNo = count  # re-assign gene number over that assigned by Glimmer
-            OUT.write("%s\t%s\t%s\t%s\t%s\t%si\t%s\n" % (geneNo,strand,str(leftEnd),str(rightEnd),str(length),contig,protein))
+            OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,str(leftEnd),str(rightEnd),str(length),contig,protein))
 
             if USER_OUT_PROVIDED:
                 USER_OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,str(leftEnd),str(rightEnd),str(length),contig,protein))
@@ -359,7 +359,7 @@ def ProcessGFF3(fLines,OUT):
                     strand    =     fields[6]
                     if fields[8] != '':
                         protein = fields[8]
-                    if feature == 'CDS':
+                    if feature.lower() == 'cds':
                         length = rightEnd - leftEnd + 1
                         OUT.write("%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (geneNo,strand,str(leftEnd),str(rightEnd),str(length),contig,protein))
                         if USER_OUT_PROVIDED:
@@ -399,7 +399,7 @@ def ProcessProdigal(fLines,OUT):
         p_dataLine = re.compile('(.*)\t.*\tCDS\t(\d+)\t(\d+)\t([\d\.]+)\t([+-])\t.\t(.*)') 
         for line in fLines:
             match_header   = re.search(p_header,  line)
-            match_comment = re.search(p_comment,line)
+            match_comment  = re.search(p_comment,line)
             match_dataLine = re.search(p_dataLine,line)
             if match_header:
                 contig = match_header.group(1)

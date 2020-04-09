@@ -1,0 +1,15 @@
+*.pyc
+*.log
+*.config
+*.out
+*.zip
+*.gff
+*.txt
+*.tar
+*.tar.gz
+__pycache__
+PipelineInput/
+PipelineOutput/
+ExternalCodes/
+Databases/
+
